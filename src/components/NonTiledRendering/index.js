@@ -1,6 +1,20 @@
 import React from 'react'
+import injectSheet from 'react-jss'
 
-const NonTiledRendering = ({bigData}) => {
+const style = {
+    container: {
+        height: 600,
+        width: '100%',
+        overflow: 'scroll',
+        border: '2px #ccc solid',
+    },
+    pre: {
+        margin: 0,
+        padding: 15
+    }
+}
+
+const NonTiledRendering = ({bigData, classes}) => {
     const elems = bigData.map((item) => {
         return (
             <span>
@@ -10,12 +24,12 @@ const NonTiledRendering = ({bigData}) => {
         )
     })
     return (
-        <div style={{height: 600, width: 400, overflow: 'scroll', border: '2px #ccc solid'}}>
-            <pre style={{margin: 0}}>
+        <div className={classes.container}>
+            <pre className={classes.pre}>
                 {elems}
             </pre>
         </div>
     )
 }
 
-export default NonTiledRendering
+export default injectSheet(style)(NonTiledRendering)

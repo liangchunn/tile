@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
+import injectSheet from 'react-jss'
 import VirtualList from 'react-virtual-list'
 
+const style = {
+    container: {
+        height: 600,
+        width: '100%',
+        overflow: 'scroll',
+        border: '2px #ccc solid',
+    }
+}
+
 const List = ({virtual, itemHeight}) => (
-    <div style={{boxSizing: 'border-box', ...virtual.style}}>
+    <div style={{boxSizing: 'border-box', padding: 15, ...virtual.style}}>
         {virtual.items.map((item, index) => (
         <div key={`item_${item.id}`} style={{height: itemHeight, border: '2px rgba(255, 0, 0, 0.5) transparent'}}>
-            <pre style={{margin: 0}}>RenderIndex: {index}<br/>{item.data}</pre>
-            {/* {item.id} RenderIndex: {index} */}
+            <pre style={{margin: 0, border: '1px rgba(0, 0, 0, 0.5) solid'}}>RenderIndex: {index}<br/>{item.data}</pre>
         </div>
         ))}
     </div>
@@ -16,7 +25,7 @@ class TiledRendering extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            ListSlides: 'Loading',
+            ListSlides: null,
             ready: false,
         }        
     }
@@ -31,9 +40,10 @@ class TiledRendering extends Component {
     }
 
     render() {
-        const ListSlides = this.state.ListSlides
+        const { ListSlides } = this.state
+        const { classes } = this.props
         return ( 
-            <div style={{height: 600, width: 400, overflow: 'scroll', border: '2px #ccc solid'}} ref='container'>
+            <div className={classes.container} ref='container'>
                 {this.state.ready && <ListSlides 
                     items={this.props.bigData}
                     itemHeight={105}
@@ -43,4 +53,4 @@ class TiledRendering extends Component {
     }
 }
 
-export default TiledRendering
+export default injectSheet(style)(TiledRendering)
